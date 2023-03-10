@@ -1,9 +1,9 @@
 import os
-import playwright_test_1, playwright_test_2
+import test_playwright_1, test_playwright_2
 
 scenarios = [
-    playwright_test_1,
-    playwright_test_2
+    test_playwright_1,
+    test_playwright_2
 ]
 
 code_template = """
