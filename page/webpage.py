@@ -3,9 +3,7 @@ import sys
 from page.webelement import WebElement
 from playwright.sync_api import TimeoutError as TimeoutException
 from playwright.sync_api import Page
-from playwright.sync_api import ViewportSize
 import pytest
-from browser import Browser, Browsers
 
 
 class WebPage(Page):
@@ -124,35 +122,3 @@ class WebPage(Page):
             pytest.fail(f"WebPage.check_if_exists():\n  error: {sys.exc_info()[0]}")
 
         return True
-
-    # def evaluate(self, expression, arg):
-
-
-def get_page(pw_context):
-    browser_config = Browser("chrome")
-    browser_name = browser_config.capabilities["browserName"]
-
-    viewport_width = browser_config.screen_width
-    viewport_height = browser_config.screen_height
-
-    if browser_name == Browsers.CHROME:
-        browser = pw_context.chromium.launch(headless=False)
-    elif browser_name == Browsers.FIREFOX:
-        browser = pw_context.firefox.launch()
-    elif browser_name == Browsers.SAFARI:
-        browser = pw_context.webkit.launch()
-    else:
-        browser = None
-
-    # Get browser context
-    # Should add user agent explicitly cause without defining page cannot be fully loaded in Chrome headless
-    browser_context = browser.new_context(
-        viewport=ViewportSize(width=viewport_width, height=viewport_height),
-        user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36",
-    )
-
-    page = browser_context.new_page()
-
-    web_page = WebPage(page._impl_obj)
-
-    return browser_context, browser, web_page
