@@ -1,3 +1,4 @@
+import os
 import pytest
 from page.webpage import WebPage
 from playwright.sync_api import ViewportSize
@@ -14,6 +15,8 @@ from playwright.sync_api import (
 
 @pytest.fixture(scope="session")
 def playwright():
+    selenium_remote_url = "http://127.0.0.1:4444/wd/hub"
+    os.environ["SELENIUM_REMOTE_URL"] = selenium_remote_url
     pw = sync_playwright().start()
     yield pw
     pw.stop()
@@ -25,7 +28,7 @@ def browser(playwright: Playwright):
     browser_name = browser_config.capabilities["browserName"]
 
     if browser_name == Browsers.CHROME:
-        browser = playwright.chromium.launch(headless=False)
+        browser = playwright.chromium.launch(headless=False, args=["--remote-allow-origins=*"])
     elif browser_name == Browsers.FIREFOX:
         browser = playwright.firefox.launch()
     elif browser_name == Browsers.SAFARI:

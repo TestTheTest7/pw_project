@@ -36,6 +36,8 @@ def test(page):
     page.get_element(GENERAL_MODALS_COOKIE_POPUP_ACCEPT).click()
     page.wait_loading(GENERAL_LOADERS_LOADING_LINE, time_to_appear=5, time_to_disappear=15)
 
+    page.page_pause()
+
     # Select flight type
     page.get_element(SEARCH_FLIGHT_TYPE_BUTTON).click()
     page.get_element(SEARCH_FLIGHT_TYPE_SELECTION.format(flight_type="oneWay")).click()

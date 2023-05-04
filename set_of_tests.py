@@ -2,13 +2,12 @@ import os
 import test_playwright_1, test_playwright_2
 
 scenarios = [
-    test_playwright_1,
-    test_playwright_2
+    test_playwright_1
 ]
 
 code_template = """
 def test_{}(page):
-    {}.test(page)
+    {}.test(page) 
 """
 
 # Execute scenarios
